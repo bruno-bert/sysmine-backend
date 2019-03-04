@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "node ace test",
-    "publish": "git add . && git commit -m '%RANDOM%' && git push"  
+    "publish": "git add . && git commit -m '%RANDOM%' && git push"
   },
   "keywords": [
     "adonisjs",
@@ -28,7 +28,9 @@
     "pg": "^7.8.1",
     "url-parse": "^1.4.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^5.15.0"
+  },
   "autoload": {
     "App": "./app"
   }
