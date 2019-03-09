@@ -173,7 +173,9 @@ module.exports = {
     | based on HTTP headers/query string.
     |
     */
-    locale: 'en'
+    locale: 'en',
+
+    fallbackLocale: 'en'
   },
 
   logger: {

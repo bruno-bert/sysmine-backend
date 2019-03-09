@@ -23,11 +23,12 @@ class ProcessoController {
    * @param {View} ctx.view
    */
   async index({
-    response
+    response,
+    auth
   }) {
 
 
-    const data = await ProcessoService.index()
+    const data = await ProcessoService.index(auth)
 
     response.status(200).json(data)
   }
@@ -47,19 +48,12 @@ class ProcessoController {
     response
   }) {
 
-    const body = request.only(['ano', 'numero', 'titular', 'fase_id'])
+    const data = request.only(['ano', 'numero', 'titular', 'fase_id'])
 
-    const audit = {
-      createdBy: auth.user.id,
-      updatedBy: auth.user.id,
-    }
-
-    const newData = {
-      ...body,
-      ...audit
-    }
-
-    const result = await ProcessoService.store(newData)
+    const result = await ProcessoService.store({
+      ...data,
+      auth
+    })
 
     response.status(200).json(result)
 
@@ -102,18 +96,12 @@ class ProcessoController {
   }) {
 
 
-    const body = request.only(['ano', 'numero', 'titular', 'fase_id'])
+    const data = request.only(['ano', 'numero', 'titular', 'fase_id'])
 
-    const audit = {
-      updatedBy: auth.user.id
-    }
-
-    const newData = {
-      ...body,
-      ...audit
-    }
-
-    const result = await ProcessoService.update(params.id, newData)
+    const result = await ProcessoService.update(params.id, {
+      ...data,
+      auth
+    })
 
     response.status(200).json(result)
 

@@ -1,4 +1,5 @@
 const Processo = use('App/Models/Processo')
+const Intl = use('App/Services/Intl')
 
 class ProcessoService {
 
@@ -13,7 +14,9 @@ class ProcessoService {
       .fetch()
 
     return {
-      message: `List of processes (${data.rows.length}) returned sucessfully`,
+      message: Intl.formatMessage('process.index', {
+        count: data.rows.length
+      }),
       data
     }
 
@@ -23,6 +26,12 @@ class ProcessoService {
 
   async store(data) {
 
+    const audit = {
+      createdBy: data.auth.user.id,
+      updatedBy: data.auth.user.id,
+    }
+
+
     const others = {
       numero_ano: `${data.numero}_${data.ano}`,
       prioridade: '1',
@@ -31,11 +40,14 @@ class ProcessoService {
 
     const stored = await Processo.create({
       ...others,
-      ...data
+      ...data,
+      ...audit
     })
 
     return {
-      message: `Processo ${stored.numero_ano} created sucessfully`,
+      message: Intl.formatMessage('process.store', {
+        id: stored.numero_ano
+      }),
       data: stored
     }
 
@@ -48,12 +60,16 @@ class ProcessoService {
 
     data.numero_ano = `${data.numero}_${data.ano}`
 
+    data.updatedBy = data.auth.user.id
+
     origin.merge(data)
 
     await origin.save()
 
     return {
-      message: `Processo ${origin.numero_ano} updated sucessfully`,
+      message: Intl.formatMessage('process.update', {
+        id: stored.numero_ano
+      }),
       data: origin
     }
 
@@ -65,7 +81,9 @@ class ProcessoService {
     const data = await Processo.findOrFail(id)
 
     return {
-      message: `Process ${data.numero_ano} loaded sucessfully`,
+      message: Intl.formatMessage('process.show', {
+        id: stored.numero_ano
+      }),
       data
     }
 
@@ -78,7 +96,9 @@ class ProcessoService {
     await data.delete()
 
     return {
-      message: `Process ${data.numero_ano} deleted sucessfully`,
+      message: Intl.formatMessage('process.destroy', {
+        id: stored.numero_ano
+      }),
       data
     }
 

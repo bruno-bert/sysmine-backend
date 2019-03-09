@@ -19,7 +19,11 @@ const Route = use("Route")
 Route.post("/register", "AuthController.register")
 Route.post("/authenticate", "AuthController.authenticate")
 
+Route.post("/lang/:id", "UserController.switchLang")
+
 Route.group(() => {
+
+  Route.get("/users", "UserController.index")
 
   Route.resource('processos', 'ProcessoController')
     .apiOnly()
@@ -32,4 +36,4 @@ Route.group(() => {
 
   Route.resource('fases', 'FaseController').apiOnly()
 
-}).middleware(['auth'])
+}).middleware(['auth', 'locale'])

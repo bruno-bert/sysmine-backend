@@ -1,0 +1,11 @@
+{
+  "process.store": "Processo {id} criado com sucesso",
+  "process.update": "Process {id} atualizado com sucesso",
+  "process.index": "Lista de processos {count} retornada com sucesso",
+  "process.show": "Processo {id} carregado com sucesso",
+  "process.destroy": "Processo {id} excluído com sucesso",
+  "user.switchLang": "Idioma para usuário {userid} alterado con sucesso para { lang }",
+  "user.create": "Usuário {id} registrado com sucesso",
+  "user.index": "Lista de usuários retornada com sucesso"
+
+}

@@ -1,22 +1,25 @@
 'use strict'
 
-const User = use('App/Models/User')
+const UserService = use('App/Services/UserService');
+
 
 class AuthController {
 
   async register({
-    request
+    request,
+    response
   }) {
     const data = request.only(['username', 'email', 'password'])
-
-    const user = await User.create(data)
-
-    return user
+    const result = await UserService.create(data)
+    return response.status(200).json(result)
   }
+
+
 
   async authenticate({
     request,
-    auth
+    auth,
+    response
   }) {
     const {
       email,
