@@ -1,7 +1,14 @@
 const Processo = use('App/Models/Processo')
+const BaseService = use('App/Services/BaseService')
 const Intl = use('App/Services/Intl')
 
-class ProcessoService {
+class ProcessoService extends BaseService {
+
+  constructor() {
+    super(Processo, {
+      modelName: 'process'
+    })
+  }
 
   async index() {
 
@@ -26,11 +33,6 @@ class ProcessoService {
 
   async store(data) {
 
-    const audit = {
-      createdBy: data.auth.user.id,
-      updatedBy: data.auth.user.id,
-    }
-
 
     const others = {
       numero_ano: `${data.numero}_${data.ano}`,
@@ -38,29 +40,32 @@ class ProcessoService {
       tipo_inclusao: 'M'
     }
 
-    const stored = await Processo.create({
+    return super.store({
       ...others,
-      ...data,
-      ...audit
-    })
+      ...data
+    });
+
+    /*
+    const stored = await Processo.create()
 
     return {
       message: Intl.formatMessage('process.store', {
-        id: stored.numero_ano
+        id: data.numero_ano
       }),
       data: stored
-    }
+    }*/
 
   }
 
 
   async update(id, data) {
 
-    const origin = await Processo.findOrFail(id)
-
     data.numero_ano = `${data.numero}_${data.ano}`
 
-    data.updatedBy = data.auth.user.id
+    return super.update(id, data)
+
+    /*
+    const origin = await Processo.findOrFail(id)
 
     origin.merge(data)
 
@@ -68,41 +73,42 @@ class ProcessoService {
 
     return {
       message: Intl.formatMessage('process.update', {
-        id: stored.numero_ano
+        id: data.numero_ano
       }),
       data: origin
-    }
+    }*/
 
   }
 
 
-  async show(id) {
+  /*
+    async show(id) {
 
-    const data = await Processo.findOrFail(id)
+      const data = await Processo.findOrFail(id)
 
-    return {
-      message: Intl.formatMessage('process.show', {
-        id: stored.numero_ano
-      }),
-      data
+      return {
+        message: Intl.formatMessage('process.show', {
+          id
+        }),
+        data
+      }
+
     }
 
-  }
+    async destroy(id) {
 
-  async destroy(id) {
+      const data = await Processo.findOrFail(id)
 
-    const data = await Processo.findOrFail(id)
+      await data.delete()
 
-    await data.delete()
+      return {
+        message: Intl.formatMessage('process.destroy', {
+          id: data.numero_ano
+        }),
+        data
+      }
 
-    return {
-      message: Intl.formatMessage('process.destroy', {
-        id: stored.numero_ano
-      }),
-      data
-    }
-
-  }
+    }*/
 
 
 

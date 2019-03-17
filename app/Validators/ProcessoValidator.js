@@ -2,7 +2,7 @@
 
 const GlobalValidator = use('App/Validators/GlobalValidator')
 
-class Processo extends GlobalValidator {
+class ProcessoValidator extends GlobalValidator {
 
   get rules() {
     return {
@@ -23,4 +23,4 @@ class Processo extends GlobalValidator {
 
 }
 
-module.exports = Processo
+module.exports = ProcessoValidator

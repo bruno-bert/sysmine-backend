@@ -30,7 +30,7 @@ Route.group(() => {
     .validator(new Map([
       [
         ['processos.store', 'processos.update'],
-        ['Processo']
+        ['ProcessoValidator']
       ]
     ]))
 
